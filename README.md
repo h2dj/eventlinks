@@ -2,44 +2,72 @@
 
 공동체IT사회적협동조합 행사용 링크 모음 페이지 (링크트리 스타일)
 
+**Next.js(Vercel 배포) + Turso(libSQL) DB** 기반으로, 관리자 로그인 후 웹에서 바로 링크와
+사이트 정보를 수정할 수 있습니다. 저장하면 코드 배포 없이 실제 사이트에 즉시 반영됩니다.
+
 ## 구성
 
-- `index.html` — 페이지 구조
-- `admin.html` — 코드 수정 없이 링크를 편집할 수 있는 도구 (아래 "링크 수정 방법" 참고)
-- `css/style.css` — 스타일 (2열 버튼 그리드, 라이트/다크 모드 자동 대응)
-- `css/admin.css` — 편집기(`admin.html`) 전용 스타일
-- `js/links-data.js` — 버튼에 표시할 링크 목록 (제목/URL/아이콘)
-- `js/script.js` — `links-data.js`의 데이터를 읽어 버튼을 화면에 렌더링
-- `js/admin.js` — 편집기(`admin.html`)의 동작(폼 편집, 미리보기, 파일 생성)
+- `app/page.js` — 공개 페이지 (2열 링크 버튼 그리드), DB에서 항상 최신 데이터를 읽어옵니다.
+- `app/admin/` — 관리자 설정 페이지
+  - `page.js` — 로그인 여부에 따라 로그인 폼 또는 편집기를 보여줍니다.
+  - `LoginForm.js` — 비밀번호 로그인 폼
+  - `AdminEditor.js` — 단체 이름/소개 문구, 링크 목록(추가·삭제·순서 변경) 편집 + 실시간 미리보기
+  - `actions.js` — 로그인/로그아웃/저장을 처리하는 서버 액션 (인증 확인 포함)
+- `lib/db.js` — Turso(libSQL) 접속 및 테이블 생성/조회/저장 로직 (`links`, `settings` 테이블)
+- `lib/auth.js` — 비밀번호 확인, 세션 쿠키 서명/검증 (HMAC 기반)
+- `app/globals.css` — 공개 페이지 + 관리자 페이지 공통 스타일 (라이트/다크 모드 자동 대응)
 
-## 링크 수정 방법
+## 환경변수
 
-### 방법 1. 편집기 사용 (권장, 코드 몰라도 가능)
+`.env.example` 참고. 로컬 개발 시 `.env.local` 파일로 복사해서 값을 채우면 됩니다.
 
-1. `admin.html`을 브라우저로 열기 (사이트 하단 "링크 편집" 링크로도 접근 가능)
-2. 아이콘·제목·URL을 입력/수정하고, 추가·삭제·순서 변경(↑↓)
-3. 오른쪽 미리보기로 실제 버튼 모양 확인
-4. **파일 다운로드** 버튼 클릭 → `links-data.js` 파일 저장
-5. GitHub 저장소에서 `js/links-data.js` 열기 → 연필(✏️) 아이콘 클릭 → 기존 내용을 지우고 다운로드한 내용 붙여넣기 → 커밋
+| 변수 | 설명 |
+| --- | --- |
+| `TURSO_DATABASE_URL` | Turso 데이터베이스 URL (`libsql://...`). **비워두면 로컬 SQLite 파일(`local.db`)을 자동 사용**하므로 로컬 개발에는 필수가 아닙니다. |
+| `TURSO_AUTH_TOKEN` | Turso 인증 토큰. Vercel 배포 시에는 필수입니다. |
+| `ADMIN_PASSWORD` | `/admin` 로그인 비밀번호. 원하는 값으로 직접 지정하세요. |
+| `AUTH_SECRET` | 로그인 세션 쿠키 서명에 쓰는 비밀 키. `openssl rand -hex 32` 등으로 생성한 무작위 값 권장. |
 
-편집 중인 내용은 브라우저에 자동 저장되어, 페이지를 다시 열어도 이어서 편집할 수 있습니다. (단, 이 페이지에서 수정한 것만으로는 실제 사이트에 반영되지 않으며 4~5번까지 마쳐야 합니다.)
+## Turso 데이터베이스 만들기
 
-### 방법 2. 코드 직접 수정
-
-`js/links-data.js` 파일의 `LINKS` 배열을 직접 수정합니다.
-
-```js
-{
-  title: "행사 신청하기",   // 버튼에 표시할 이름
-  url: "https://forms.gle/EXAMPLE", // 실제 링크 주소
-  icon: "📝", // 이모지 (선택 사항)
-}
+```bash
+# Turso CLI 설치 후
+turso auth login
+turso db create eventlinks
+turso db show eventlinks --url        # → TURSO_DATABASE_URL
+turso db tokens create eventlinks      # → TURSO_AUTH_TOKEN
 ```
 
-- 배열 순서대로 2열 그리드에 배치됩니다.
-- 항목을 추가하거나 삭제해도 자동으로 레이아웃이 조정됩니다.
-- 현재 기본 링크: 공동체IT 홈페이지, 디지털 역량진단, OX퀴즈, 디지털활용유형검사, 디지털 공론장
+테이블(`links`, `settings`)은 앱이 처음 DB에 접속할 때 자동으로 생성되고,
+비어 있으면 기본 링크 5개로 자동 채워집니다. 별도 마이그레이션 명령은 필요 없습니다.
 
-## 로컬에서 미리보기
+## Vercel 배포
 
-별도의 빌드 과정 없이 `index.html`을 브라우저로 열거나, 정적 파일 서버(GitHub Pages 등)에 그대로 올리면 됩니다.
+1. 이 저장소를 Vercel 프로젝트로 Import (Next.js는 별도 설정 없이 바로 인식됩니다)
+2. Vercel 프로젝트 **Settings → Environment Variables**에 위 4개 환경변수를 등록
+3. Deploy
+
+이후 `/admin`에서 로그인해 링크를 수정하면 저장 즉시 배포 없이 실제 사이트(`/`)에 반영됩니다.
+
+## 관리자 설정 페이지 사용법
+
+1. 사이트 하단의 **관리자 설정** 링크 또는 `/admin`으로 접속
+2. `ADMIN_PASSWORD`로 로그인
+3. 단체 이름/소개 문구, 링크 목록(아이콘·제목·URL) 수정 — 추가/삭제/순서 변경(↑↓) 가능
+4. 오른쪽 미리보기로 실제 모습 확인 후 **저장하기** 클릭 → Turso DB에 즉시 저장되어 실제 사이트에 반영
+
+## 로컬에서 실행하기
+
+```bash
+npm install
+cp .env.example .env.local   # ADMIN_PASSWORD / AUTH_SECRET 값 채우기 (TURSO_* 는 비워둬도 됨)
+npm run dev                  # http://localhost:3000
+```
+
+`TURSO_DATABASE_URL`을 설정하지 않으면 프로젝트 폴더에 `local.db` 파일이 자동 생성되어
+로컬 SQLite로 동작합니다 (git에는 포함되지 않습니다).
+
+```bash
+npm run build && npm run start   # 프로덕션 빌드로 실행
+npm run lint                     # 린트
+```
