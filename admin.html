@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>링크 편집기 | 공동체IT사회적협동조합</title>
+  <meta name="description" content="행사 링크 버튼을 코드 수정 없이 편집하는 도구" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <main class="admin-page">
+    <header class="admin-header">
+      <h1>🔗 링크 편집기</h1>
+      <p class="admin-sub">
+        아래에서 링크를 자유롭게 수정한 뒤, <strong>다운로드</strong> 버튼으로 받은 파일을
+        GitHub의 <code>js/links-data.js</code> 파일에 덮어쓰면 실제 사이트에 반영됩니다.
+      </p>
+    </header>
+
+    <section class="admin-guide">
+      <ol>
+        <li>아래 목록에서 아이콘·제목·URL을 수정하거나, 링크 추가/삭제/순서 변경</li>
+        <li>오른쪽(또는 아래) 미리보기에서 실제 버튼 모양 확인</li>
+        <li><strong>파일 다운로드</strong> 버튼 클릭 → <code>links-data.js</code> 파일 저장</li>
+        <li>GitHub 저장소 → <code>js/links-data.js</code> 열기 → 연필(✏️) 아이콘 클릭</li>
+        <li>기존 내용을 지우고, 다운로드한 파일 내용을 붙여넣은 뒤 커밋(저장)</li>
+      </ol>
+      <p class="admin-note">
+        ⚠️ 이 페이지 자체는 미리보기/편집 도구이며, 여기서 수정한 내용이 자동으로 실제
+        사이트에 올라가지는 않습니다. 위 4~5번 단계까지 마쳐야 실제로 반영됩니다.
+        작업 중인 내용은 이 브라우저에 임시 저장되니, 다시 열어도 이어서 편집할 수 있습니다.
+      </p>
+    </section>
+
+    <div class="admin-layout">
+      <section class="admin-editor" aria-label="링크 목록 편집">
+        <div class="admin-editor-head">
+          <h2>링크 목록</h2>
+          <button type="button" id="reset-btn" class="btn btn-ghost">현재 사이트 링크로 초기화</button>
+        </div>
+        <div id="rows" class="rows"></div>
+        <button type="button" id="add-row" class="btn btn-add">+ 링크 추가</button>
+      </section>
+
+      <section class="admin-preview" aria-label="미리보기">
+        <h2>미리보기</h2>
+        <div class="preview-frame">
+          <div class="page" style="padding-block: 24px;">
+            <div class="profile">
+              <div class="avatar" aria-hidden="true">IT</div>
+              <h1 class="org-name">공동체IT사회적협동조합</h1>
+              <p class="tagline">행사에 필요한 링크를 한 곳에 모았습니다</p>
+            </div>
+            <div class="links" id="preview-links"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="admin-output" aria-label="생성된 코드">
+      <div class="admin-output-head">
+        <h2>생성된 파일 내용 (js/links-data.js)</h2>
+        <div class="output-actions">
+          <button type="button" id="copy-btn" class="btn btn-secondary">복사하기</button>
+          <button type="button" id="download-btn" class="btn btn-primary">파일 다운로드</button>
+        </div>
+      </div>
+      <textarea id="output" class="output-code" readonly spellcheck="false"></textarea>
+      <p id="copy-feedback" class="copy-feedback" hidden>✅ 복사되었습니다</p>
+    </section>
+
+    <footer class="footer">
+      <p><a href="index.html">← 실제 사이트로 돌아가기</a></p>
+    </footer>
+  </main>
+
+  <script src="js/links-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
