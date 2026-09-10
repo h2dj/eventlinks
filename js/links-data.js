@@ -5,33 +5,28 @@
 
 const LINKS = [
   {
-    title: "협동조합 소개",
-    url: "https://example.org/",
+    title: "공동체IT 홈페이지",
+    url: "https://ictact.kr/",
     icon: "🏠",
   },
   {
-    title: "행사 신청하기",
-    url: "https://forms.gle/EXAMPLE",
-    icon: "📝",
+    title: "디지털 역량진단",
+    url: "https://www.ictact.kr/dctest",
+    icon: "📊",
   },
   {
-    title: "카카오톡 오픈채팅",
-    url: "https://open.kakao.com/EXAMPLE",
-    icon: "💬",
+    title: "OX퀴즈",
+    url: "https://www.ictact.kr/dctest/quiz",
+    icon: "❓",
   },
   {
-    title: "인스타그램",
-    url: "https://instagram.com/EXAMPLE",
-    icon: "📷",
+    title: "디지털활용유형검사",
+    url: "https://www.ictact.kr/dctest/mini-test",
+    icon: "🧭",
   },
   {
-    title: "유튜브",
-    url: "https://youtube.com/@EXAMPLE",
-    icon: "▶️",
-  },
-  {
-    title: "오시는 길",
-    url: "https://map.naver.com/EXAMPLE",
-    icon: "📍",
+    title: "디지털 공론장",
+    url: "https://forum2026.ictact.kr",
+    icon: "🗣️",
   },
 ];
