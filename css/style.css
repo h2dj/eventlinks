@@ -131,6 +131,20 @@ body {
   font-size: 0.8rem;
 }
 
+.footer-admin-link {
+  margin-top: 6px;
+}
+
+.footer-admin-link a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.footer-admin-link a:hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
 @media (max-width: 360px) {
   .link-btn {
     padding: 16px 8px;
