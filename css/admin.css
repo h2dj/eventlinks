@@ -1,0 +1,251 @@
+.admin-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-inline: 20px;
+}
+
+.admin-header h1 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.admin-sub {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.admin-sub code,
+.admin-guide code {
+  background: var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.admin-guide {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+
+.admin-guide ol {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+.admin-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-editor,
+.admin-preview,
+.admin-output {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+
+.admin-editor-head,
+.admin-output-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.admin-editor h2,
+.admin-preview h2,
+.admin-output h2 {
+  font-size: 1.05rem;
+  margin: 0 0 14px;
+}
+
+.admin-editor-head h2 {
+  margin: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 52px 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 44px 1fr;
+    grid-template-areas:
+      "icon title"
+      "icon url"
+      "actions actions";
+  }
+  .row .field-icon { grid-area: icon; align-self: start; }
+  .row .field-title { grid-area: title; }
+  .row .field-url { grid-area: url; }
+  .row .row-actions { grid-area: actions; justify-content: flex-end; }
+}
+
+.row input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.row input.field-icon {
+  text-align: center;
+  padding-inline: 4px;
+}
+
+.row input:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  border-color: var(--brand);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.icon-btn.danger:hover {
+  border-color: #d1483f;
+  color: #d1483f;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn:hover {
+  border-color: var(--brand);
+}
+
+.btn-add {
+  width: 100%;
+  border-style: dashed;
+}
+
+.btn-ghost {
+  background: transparent;
+  font-weight: 500;
+  font-size: 0.82rem;
+  padding: 8px 12px;
+}
+
+.btn-primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+.btn-secondary {
+  background: var(--surface);
+}
+
+.preview-frame {
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.admin-output-head {
+  flex-direction: row;
+}
+
+.output-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.output-code {
+  width: 100%;
+  min-height: 220px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  padding: 14px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.copy-feedback {
+  margin: 10px 0 0;
+  color: var(--brand-dark);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
