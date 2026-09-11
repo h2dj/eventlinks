@@ -11,17 +11,17 @@ const LINKS = [
   },
   {
     title: "디지털 역량진단",
-    url: "https://www.ictact.kr/dctest",
+    url: "https://dctest.ictact.kr/",
     icon: "📊",
   },
   {
     title: "OX퀴즈",
-    url: "https://www.ictact.kr/dctest/quiz",
+    url: "https://dctest.ictact.kr/quiz",
     icon: "❓",
   },
   {
     title: "디지털활용유형검사",
-    url: "https://www.ictact.kr/dctest/mini-test",
+    url: "https://dctest.ictact.kr/mini-test",
     icon: "🧭",
   },
   {
