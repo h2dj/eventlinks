@@ -2,9 +2,9 @@
 (function () {
   const container = document.getElementById("links");
 
-  if (!container || !Array.isArray(window.LINKS)) return;
+  if (!container || typeof LINKS === "undefined" || !Array.isArray(LINKS)) return;
 
-  window.LINKS.forEach((link) => {
+  LINKS.forEach((link) => {
     const a = document.createElement("a");
     a.className = "link-btn";
     a.href = link.url;

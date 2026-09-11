@@ -9,7 +9,8 @@
   const outputEl = document.getElementById("output");
   const copyFeedback = document.getElementById("copy-feedback");
 
-  const defaultLinks = Array.isArray(window.LINKS) ? window.LINKS : [];
+  const defaultLinks =
+    typeof LINKS !== "undefined" && Array.isArray(LINKS) ? LINKS : [];
 
   let state = loadDraft() ?? defaultLinks.map((l) => ({ ...l }));
 
